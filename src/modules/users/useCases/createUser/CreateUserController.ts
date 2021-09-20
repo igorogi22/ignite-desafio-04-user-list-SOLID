@@ -8,9 +8,14 @@ class CreateUserController {
   handle(request: Request, response: Response): Response {
     const { name, email } = request.body;
 
-    const user = this.createUserUseCase.execute({ name, email });
+    try {
+      const user = this.createUserUseCase.execute({ name, email });
 
-    return response.status(201).json(user);
+      return response.status(201).json(user);
+    } catch (err) {
+      console.log(err);
+      return response.status(400).json({ error: "User already exists!" });
+    }
   }
 }
 
