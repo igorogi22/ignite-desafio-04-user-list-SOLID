@@ -8,9 +8,14 @@ class ListAllUsersController {
   handle(request: Request, response: Response): Response {
     const user_id = request.headers.user_id as string;
 
-    const users = this.listAllUsersUseCase.execute({ user_id });
+    try {
+      const users = this.listAllUsersUseCase.execute({ user_id });
 
-    return response.status(200).json(users);
+      return response.status(200).json(users);
+    } catch (err) {
+      console.log(err);
+      return response.status(400).json({ error: "User is not admin!" });
+    }
   }
 }
 
