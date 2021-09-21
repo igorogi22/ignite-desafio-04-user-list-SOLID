@@ -1,0 +1,311 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "List Users - Ignite desafio 04",
+        "description": "Esta documentação é referente à api de listagem de usuários, proposta no desafio 04 do ignite",
+        "version": "1.0.0",
+        "contact": {
+            "email": "igorvinicius.oli@gmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": ["Users"],
+                "sumary": "Cria um novo usuário",
+                "description": "Cria um novo usuário",
+                "requestBody": {
+                  "content": {
+                      "aplication/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                }
+                            },
+                            "example": {
+                                "name": "Igor Vinicius",
+                                "description": "igor@email.com"
+                            }
+                        }
+                      }
+                  }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "369b9436-f83e-426f-86ba-d0024cb630cf"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Igor Vinicius"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "igor@email.com"
+                                        },
+                                        "admin": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "created_at": {
+                                            "type": "date",
+                                            "example": "2021-09-21T00:01:59.358Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "date",
+                                            "example": "2021-09-21T00:01:59.358Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário já cadastrado",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "User already exists!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Users"],
+                "sumary": "Retorna todos os usuarios",
+                "description": "Somente usuário admin pode acessar",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "header",
+                        "required": "true",
+                        "description": "ID de um user admin",
+                        "schema": {
+                            "type": "string",
+                            "example": "369b9436-f83e-426f-86ba-d0024cb630cf"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200":  {
+                        "description": "Listagem dos usuários",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Igor Vinicius"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "igor@email.com"
+                                            },
+                                            "admin": {
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "created_at": {
+                                                "type": "date",
+                                                "example": "2021-09-21T00:01:59.358Z"
+                                            },
+                                            "updated_at": {
+                                                "type": "date",
+                                                "example": "2021-09-21T00:01:59.358Z"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário não autorizado!!",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "User is not admin!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": ["Users"],
+                "sumary": "Mostra um usuário a partir do id",
+                "description": "Mostra um usuário a partir do id",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": "true",
+                        "description": "ID d0 usuário a ser exibido",
+                        "schema": {
+                            "type": "string",
+                            "example": "369b9436-f83e-426f-86ba-d0024cb630cf"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário pesquisado",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "369b9436-f83e-426f-86ba-d0024cb630cf"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Igor Vinicius"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "igor@email.com"
+                                        },
+                                        "admin": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "created_at": {
+                                            "type": "date",
+                                            "example": "2021-09-21T00:01:59.358Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "date",
+                                            "example": "2021-09-21T00:01:59.358Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário não encontrado",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "User not found!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "users/{user_id}/admin": {
+            "patch": {
+                "tags": ["Users"],
+                "sumary": "Torna um usuário admin",
+                "description": "Torna um usuário admin",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": "true",
+                        "description": "ID do usuário a ser mudado para admin",
+                        "schema": {
+                            "type": "string",
+                            "example": "369b9436-f83e-426f-86ba-d0024cb630cf"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Usuário agora é um admin",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "369b9436-f83e-426f-86ba-d0024cb630cf"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Igor Vinicius"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "igor@email.com"
+                                        },
+                                        "admin": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "created_at": {
+                                            "type": "date",
+                                            "example": "2021-09-21T00:01:59.358Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "date",
+                                            "example": "2021-09-21T00:01:59.358Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário não encontrado!",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "User not found!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
